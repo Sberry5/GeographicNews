@@ -7,14 +7,24 @@ function initMap() {
   var haightAshbury = { lat: 39.0997, lng: -94.5786 };
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
-    center:{ lat: 39.0997, lng: -94.5786 },
+    center: { lat: 39.0997, lng: -94.5786 },
   });
 
-    console.log("lat: " + latLngInput.lat() + ",lng: " + latLngInput.lng());
-    console.log(event)
+  google.maps.event.addListener(map, 'click', function(event) {
+    var latLngInput = event.latLng;
+    var lat = latLngInput.lat();
+    console.log(lat);
+    var lon = latLngInput.lng();
+    console.log(lon);
+    getLocation(lat, lon);
+    // var latLngGeo = event
+    addMarker({ coords: latLngInput },
+      // { content: }
+    );
     gmapDo.getLatLng(latLngInput, geocoder, map, infoWindow)
 
   });
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
@@ -29,14 +39,10 @@ function initMap() {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
-  // $('#geolocation').on('click', function() {
-
-  // })
 };
 
-// function browserGeocode() {
-  
-// }
+
+
 
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -119,64 +125,44 @@ var gmapDo = {
         } else {
           window.alert('No results found');
         }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
+  },
 
-      });
-    },
+  getGeocode: function() {
+    // const location = "60626"
+    const location = $('#user-input').val();
+    axios.get("https://maps.googleapis.com/maps/api/geocode/json", {
+        params: {
+          address: location,
+          key: 'AIzaSyD1Uqd8fvNhgRklbA6UVIr5Mmf23Ns0aGA'
+        }
+      })
+      .then(function(response) {
+        console.log(response)
+        console.log(response.data.results[0].formatted_address);
 
-    getGeocode: function() {
-      const location = "60626"
-      axios.get("https://maps.googleapis.com/maps/api/geocode/json", {
-          params: {
-            address: location,
-            key: 'AIzaSyD1Uqd8fvNhgRklbA6UVIr5Mmf23Ns0aGA'
-          }
-        })
-        .then(function(response) {
-          console.log(response)
-          console.log(response.data.results[0].formatted_address);
-
-          var formattedAddress = response.data.results[0].formatted_address;
-          var formattedAddressOutput = '<ul class="list-group"><li class="list-group-item">${formattedAddress}</li></ul>';
-          var addressComp = response.data.results[0].address_components;
-          var addressCompOutput = '<ul class="list-group">';
-          for (var i = 0; i < addressComp.length; i++) {
-            // addressCompOutput += '<li class="list-group-item">${addressComp[i].types[0]}<strong>${addressComp[i].long_name}</strong></li>';
-            addressCompOutput += '<li class="list-group-item">' + addressComp[i].types[0] + ': <strong>' + addressComp[i].long_name + '</strong></li>';
-          }
-          addressCompOutput += '</ul>';
-          console.log(formattedAddress);
-          console.log(addressCompOutput);
-          document.getElementById('address').innerHTML = formattedAddress;
-          document.getElementById('address_comp').innerHTML = addressCompOutput;
-
-
-        })
-        .catch(function(error) {
-          console.log(error)
-        })
-    }
-  }
-
-  google.maps.event.addListener(map, 'click', function(event) {
-    var latLngInput = event.latLng;
-    var lat = latLngInput.lat();
-    console.log(lat);
-    var lon = latLngInput.lng();
-    console.log(lon);
-    getLocation(lat, lon);
-    // var latLngGeo = event
-    addMarker({ coords: latLngInput },
-      // { content: }
-    );
-    console.log("lat: " + latLngInput.lat() + ",lng: " + latLngInput.lng());
-    console.log(event)
-    gmapDo.getLatLng(latLngInput, geocoder, map, infoWindow)
-  });
-
-
+        var formattedAddress = response.data.results[0].formatted_address;
+        var formattedAddressOutput = '<ul class="list-group"><li class="list-group-item">${formattedAddress}</li></ul>';
+        var addressComp = response.data.results[0].address_components;
+        var addressCompOutput = '<ul class="list-group">';
+        for (var i = 0; i < addressComp.length; i++) {
+          // addressCompOutput += '<li class="list-group-item">${addressComp[i].types[0]}<strong>${addressComp[i].long_name}</strong></li>';
+          addressCompOutput += '<li class="list-group-item">' + addressComp[i].types[0] + ': <strong>' + addressComp[i].long_name + '</strong></li>';
+        }
+        addressCompOutput += '</ul>';
+        console.log(formattedAddress);
+        console.log(addressCompOutput);
+        // document.getElementById('address').innerHTML = formattedAddress;
+        // document.getElementById('address_comp').innerHTML = addressCompOutput;
       })
       .catch(function(error) {
         console.log(error)
       })
   }
+
 }
+
+$('#add-search').on('click', gmapDo.getGeocode)

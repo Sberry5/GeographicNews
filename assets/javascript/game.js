@@ -36,10 +36,7 @@ event.preventDefault();
 
 });
 
-
-  var userSearch = user-input;
-
-//Call to NYTimes to get articles
+//-----------------------------NYTimes API call-------------------------------------//
 function getLocation(lat, lon) {
 //console.log("Article call is firing");
 var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/search/v2/articlesearch.json";
@@ -87,10 +84,6 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
     };
   });
 };
-
-//-----------------------------NYTimes-------------------------------------//
-//NYTimes
-//  $("#location").on("click", getLocation());
 
 // //-----------------------------NYTimes Search API-------------------------------------//
 //   var userSearch = $("#user-input");
