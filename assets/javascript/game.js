@@ -12,20 +12,6 @@
 
 var database = firebase.database();
 
-$("#add-job").on('click', function(){
-event.preventDefault();
-
-  //grab user input
-  var newJob = $("#user-input").val().trim();
-
-  database.ref("jobs").push(newJob);
-  console.log(newJob);
-
-  //clear field of user input
-  $("#user-input").val("");
-
-});
-
 $("#map").on('click', function(){
 event.preventDefault();
 
