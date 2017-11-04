@@ -117,6 +117,7 @@ var gmapDo = {
           });
           console.log(results)
           infowindow.setContent(results[0].formatted_address);
+          database.ref("locations").push(results[4].formatted_address);
           marker.addListener('click', function() {
             infowindow.open(map, marker);
           });
