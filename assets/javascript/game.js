@@ -12,15 +12,18 @@
 
 var database = firebase.database();
 
-$("#map").on('click', function(){
-event.preventDefault();
 
-  //grab user location selection
-  var newLocation = $('#location').val().trim();
+// ---- The below code was simplified and added to the map.js file---//
 
-  database.ref("locations").push(newLocation);
+// $("#map").on('click', function(){
+// event.preventDefault();
 
-});
+//   //grab user location selection
+//   var newLocation = $('#location').val().trim();
+
+//   database.ref("locations").push(newLocation);
+
+// });
 
 
 //-----------------------------NYTimes GEO API call-------------------------------------//
