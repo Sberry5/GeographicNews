@@ -47,6 +47,8 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
 
     //Empty the div when results are generated
     $("#left").empty();
+  database.ref("searches").push("#user-input");
+
 
     for (var i = 0; i < nyResults.length; i++) {
       var articles = $("<div>");
