@@ -47,9 +47,6 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
 
     //Empty the div when results are generated
     $("#left").empty();
-  database.ref("searches").push("#user-input");
-
-
     for (var i = 0; i < nyResults.length; i++) {
       var articles = $("<div>");
         articles.addClass("journalismResultDiv");
@@ -84,6 +81,8 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
 
  $('#add-search').on("click", function userSearch(userLocation) {
    event.preventDefault();
+ //Empty the div when results are generated
+    $("#right").empty();
     var userLocation = $('#user-input').val();
     console.log(userLocation);
    //Create queryURL
@@ -127,8 +126,11 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
       //Add snippet
       if (nyUserSearch[i].snippet && nyUserSearch[i].snippet) {
         $("#mediaResultDiv").append("<p class='mediaContent'>" + nyUserSearch[i].snippet + "</p>");
+      
+
       };
 
     };
   });
+      $("#user-input").val("");
 });

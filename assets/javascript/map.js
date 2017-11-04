@@ -18,9 +18,10 @@ function initMap() {
     console.log(lon);
     getLocation(lat, lon);
     // var latLngGeo = event
-    addMarker({ coords: latLngInput },
+    addMarker({ coords: latLngInput })
       // { content: }
-    );
+      //Empty the div when results are generated
+    $("#left").empty();
     gmapDo.getLatLng(latLngInput, geocoder, map, infoWindow)
 
   });
@@ -135,7 +136,6 @@ var gmapDo = {
   getGeocode: function() {
     // const location = "60626"
     const location = $('#user-input').val();
-    console.log(location);
     axios.get("https://maps.googleapis.com/maps/api/geocode/json", {
         params: {
           address: location,
