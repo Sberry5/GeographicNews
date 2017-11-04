@@ -45,6 +45,8 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
     var nyResults = r.response.docs;
     //      console.log(r.response)
 
+    //Empty the div when results are generated
+    $("#left").empty();
     for (var i = 0; i < nyResults.length; i++) {
       var articles = $("<div>");
         articles.addClass("journalismResultDiv");
