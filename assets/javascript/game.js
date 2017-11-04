@@ -25,8 +25,7 @@ var database = firebase.database();
 
 // });
 
-
-//-----------------------------NYTimes GEO API call-------------------------------------//
+//-----------------------------NYTimes API call-------------------------------------//
 function getLocation(lat, lon) {
 //console.log("Article call is firing");
 var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/search/v2/articlesearch.json";
