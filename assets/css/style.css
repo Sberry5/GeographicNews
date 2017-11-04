@@ -100,14 +100,14 @@ body, html {
 	position: absolute;
 	left: -2px;
 	top: -25px;
-	color: rgb(70, 90, 205);
+	color: rgb(50, 50, 50);
 }
 
 #rightColumnTitle {
 	position: absolute;
 	right: -2px;
 	top: -25px;
-	color: rgb(70, 90, 205);
+	color: rgb(50, 50, 50);
 }
 
 #left {

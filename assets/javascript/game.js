@@ -43,15 +43,20 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
     //Once data is returned store the results in a variable
     var nyResults = r.response.docs;
           console.log(r.response)
+
+    //empty the div when results are generated
+    $("#left").empty();
+
     for (var i = 0; i < nyResults.length; i++) {
       var articles = $("<div>");
-        articles.addClass("news");
-        articles.attr("id", "newsSpot");
-        $(".journalismContent").append(articles);
+        articles.addClass("journalismResultDiv");
+        articles.addClass("serif");
+        articles.attr("id", "journalismResultDiv" + [i]);
+        $("#left").append(articles);
 
       //Add headline as link to article
       if (nyResults[i].headline.main !== "null") {
-        $("#newsSpot").append("<h6 class='journalismTitle'><a href='" + nyResults[i].web_url + "' target='_blank'>" + nyResults[i].headline.main + '</h6>');
+        $("#journalismResultDiv" + [i]).append("<p class='journalismTitle'><a href='" + nyResults[i].web_url + "' target='_blank'>" + nyResults[i].headline.main + '</p>');
         // Log the first article's headline to console
         console.log(nyResults[i].headline.main);
         };
@@ -61,11 +66,11 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
 
       //Add author and date
       if (nyResults[i].byline.original !== "null") {
-      $("#newsSpot").append("<h7 class='journalismAuthor'>" + nyResults[i].byline.original + '<br>' + date + '<br>' + "</h7>");
+      $("#journalismResultDiv" + [i]).append("<p class='journalismAuthor'>" + nyResults[i].byline.original + ' ' + date + "</p>");
         };
       //Add snippet
       if (nyResults[i].snippet && nyResults[i].snippet) {
-        $("#newsSpot").append("<h7 class='journalismContent'>" + nyResults[i].snippet + "</h7>");
+        $("#journalismResultDiv" + [i]).append("<p class='journalismContent'>" + nyResults[i].snippet + "</p>");
       };
 
     };
