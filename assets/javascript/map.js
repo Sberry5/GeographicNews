@@ -135,6 +135,7 @@ var gmapDo = {
   getGeocode: function() {
     // const location = "60626"
     const location = $('#user-input').val();
+    console.log(location);
     axios.get("https://maps.googleapis.com/maps/api/geocode/json", {
         params: {
           address: location,
@@ -166,4 +167,5 @@ var gmapDo = {
 
 }
 
-$('#add-search').on('click', gmapDo.getGeocode)
+$('#add-search').on('click', gmapDo.getGeocode);
+
