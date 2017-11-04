@@ -2,129 +2,88 @@
 <html lang="en-us">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Geographic News</title>
-    <!--Reset css-->
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-    <!--Local css-->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <!--Bootstrap css-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <!--jQuery library-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
-  
-    <!--Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <title>Geographic News</title>
+  <!--Reset css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <!--Local css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <!--jQuery library-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!--Bootstrap css-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.0/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <!--Google font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
 </head>
 
 <body>
-    <div class="sans" id="title">
-        <img id="newspaperIcon" src="assets/images/newspaperIcon.png">
-        News by Location
-        <span id="placeholderMenu">&#9776;</span>
+  <div class="sans" id="title">
+    <img id="newspaperIcon" src="assets/images/newspaperIcon.png"> News by Location
+    <span id="placeholderMenu">&#9776;</span>
+  </div>
+  <div class="container">
+    <!-- map -->
+    <div class="row">
+      <div class="col-md-12 center-block">
+        <div id="map"></div>
+      </div>
     </div>
-
-    <div class="container">
-
-        <!-- map -->
-        <div class="row">
-            <div class="col-md-12 center-block">
-              <div id="map"></div>
-            </div>
-        </div>
-
-        <!--Rendered buttons will be placed here-->
-        <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-8" id="news-view">
-            </div>
-            <div class="col-md-2">
-            </div>
-        </div>
-
-        <div class="row instructions">
-
-            <div class="col-md-12 sans">
-
-            <p id="youPickedSentence">
-                <span class="step">Option 1:</span> Click a location. You picked
-                <span id="location"> ___  </span> as your location! 
-            </p>
-
-            <form id="searchBar">
-
-                <label for="user-input">
-                    <span class="step">Option 2:</span> Search a Location
-                </label>
-
-                <input type="text" id="user-input">
-
-                <button id="add-search" type="submit">Submit</button>
-
-            </form>
-
-
-            </div>
-        </div>
-
-        <div id="resultContainer">
-
-            <p class="sans" id="leftColumnTitle">New York Times </p>
-            <p class="sans" id="rightColumnTitle">Other News Result</p>
-
-            <!-- left collumn, nyt results !-->
-            <div id="left">
-
-                 <div class="serif journalismResultDiv">
-
-                    <p class="journalismTitle"></p>
-
-                    <p class="journalismAuthor"></p>
-
-                    <p class="journalismContent">
-
-                    </p>
-
-                </div>
-
-            </div>
-
-            <!-- right collumn, twitter results !-->
-            <div id="right">
-
-                <div class="sans mediaResultDiv">
-
-                    <p class="mediaTitle">Tweet Tweet</p>
-
-                    <p class="mediaAuthor">@name123</p>
-
-                    <p class="mediaContent">
-
-                        Twitter's content will display here.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <!--Rendered buttons will be placed here-->
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8" id="news-view">
+      </div>
+      <div class="col-md-2">
+      </div>
     </div>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1Uqd8fvNhgRklbA6UVIr5Mmf23Ns0aGA&callback=initMap"></script>
-
-    <!--jQuery library-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/javascript/game.js"></script>
-    <script type="text/javascript" src="assets/javascript/map.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <div class="row instructions">
+      <div class="col-md-12 sans">
+        <p id="youPickedSentence">
+          <span class="step">Option 1:</span> Click a location. You picked
+          <span id="location"> ___  </span> as your location!
+        </p>
+        <form id="searchBar">
+          <label for="user-input">
+            <span class="step">Option 2:</span> Search a Location
+          </label>
+          <input type="text" id="user-input">
+          <button id="add-search" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div id="resultContainer">
+      <p class="sans" id="leftColumnTitle">New York Times </p>
+      <p class="sans" id="rightColumnTitle">Other News Result</p>
+      <!-- left column, nyt results !-->
+      <div id="left">
+        <div class="serif journalismResultDiv">
+          <p class="journalismTitle"></p>
+          <p class="journalismAuthor"></p>
+          <p class="journalismContent">
+          </p>
+        </div>
+      </div>
+      <!-- right column, search results !-->
+      <div id="right">
+        <div class="sans mediaResultDiv">
+          <p class="mediaTitle"></p>
+          <p class="mediaAuthor"></p>
+          <p class="mediaContent">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1Uqd8fvNhgRklbA6UVIr5Mmf23Ns0aGA&callback=initMap"></script>
+  <script type="text/javascript" src="assets/javascript/game.js"></script>
+  <script type="text/javascript" src="assets/javascript/map.js"></script>
+  <script type="text/javascript" src="assets/javascript/counted.js"></script>
 </body>
 
 </html>

@@ -12,20 +12,6 @@
 
 var database = firebase.database();
 
-$("#add-job").on('click', function(){
-event.preventDefault();
-
-  //grab user input
-  var newJob = $("#user-input").val().trim();
-
-  database.ref("jobs").push(newJob);
-  console.log(newJob);
-
-  //clear field of user input
-  $("#user-input").val("");
-
-});
-
 $("#map").on('click', function(){
 event.preventDefault();
 
@@ -85,53 +71,57 @@ var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/
   });
 };
 
-// //-----------------------------NYTimes Search API-------------------------------------//
-//   var userSearch = $("#user-input");
+//-----------------------------NYTimes Search API-------------------------------------//
+//  $("#add-search").on("click", function(){
+//     //userSearch.preventDefault();
+//   var userSearch = $("#user-input").val().trim();
+// console.log(userSearch);
+// });
 
+ $("#add-search").on("click", function getLocation(userSearch) {
+    location.preventDefault();
+//console.log("Article call is firing");
+var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/search/v2/articlesearch.json";
+  queryURL += '?' + $.param({
+    'api-key': "01779c7ce4234a8ab3ac8c8c29f9eeba",
+    'q': location,
+      })
+    //Ajax call
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).done(function(s) {
+    //Console.log data received
+          //console.log(queryURL);
+          console.log(r);
+    //Once data is returned store the results in a variable
+    var nyUserSearch = s.response.docs;
+          console.log(s.response)
+    for (var i = 0; i < nyUserSearch.length; i++) {
+      var articles = $("<div>");
+        articles.addClass("news");
+        articles.attr("id", "newsSpot");
+        $(".mediaContent").append(articles);
 
-//   function getLocation(userSearch) {
-// //console.log("Article call is firing");
-// var queryURL = "https://cors-anywhere.herokuapp.com/https://api.nytimes.com/svc/search/v2/articlesearch.json";
-//   queryURL += '?' + $.param({
-//     'api-key': "01779c7ce4234a8ab3ac8c8c29f9eeba",
-//     'q': userSearch,
-//       })
-//     //Ajax call
-//       $.ajax({
-//         url: queryURL,
-//         method: "GET"
-//       }).done(function(r) {
-//     //Console.log data received
-//           //console.log(queryURL);
-//           console.log(r);
-//     //Once data is returned store the results in a variable
-//     var nySearch = r.response.docs;
-//           console.log(r.response)
-//     for (var i = 0; i < nySearch.length; i++) {
-//       var articles = $("<div>");
-//         articles.addClass("news");
-//         articles.attr("id", "newsSpot");
-//         $(".mediaContent").append(articles);
+      //Add headline as link to article
+      if (nyUserSearch[i].headline.main !== "null") {
+        $("#newsSpot").append("<h6 class='mediaTitle'><a href='" + nyUserSearch[i].web_url + "' target='_blank'>" + nyUserSearch[i].headline.main + '</h6>');
+        // Log the first article's headline to console
+        console.log(nyUserSearch[i].headline.main);
+        };
 
-//       //Add headline as link to article
-//       if (nySearch[i].headline.main !== "null") {
-//         $("#newsSpot").append("<h6 class='mediaTitle'><a href='" + nySearch[i].web_url + "' target='_blank'>" + nySearch[i].headline.main + '</h6>');
-//         // Log the first article's headline to console
-//         console.log(nySearch[i].headline.main);
-//         };
+      var date = (moment(nyUserSearch[i].pub_date, 'YYYY-DD-MMTHH:mm:ss.000').format('MM-DD-YYYY'));
+      //console.log(date);
 
-//       var date = (moment(nySearch[i].pub_date, 'YYYY-DD-MMTHH:mm:ss.000').format('MM-DD-YYYY'));
-//       //console.log(date);
+      //Add author and date
+      if (nyUserSearch[i].byline.original !== "null") {
+      $("#newsSpot").append("<h7 class='mediaAuthor'>" + nyUserSearch[i].byline.original + '<br>' + date + '<br>' + "</h7>");
+        };
+      //Add snippet
+      if (nyUserSearch[i].snippet && nyUserSearch[i].snippet) {
+        $("#newsSpot").append("<h7 class='mediaContent'>" + nyUserSearch[i].snippet + "</h7>");
+      };
 
-//       //Add author and date
-//       if (nySearch[i].byline.original !== "null") {
-//       $("#newsSpot").append("<h7 class='mediaAuthor'>" + nySearch[i].byline.original + '<br>' + date + '<br>' + "</h7>");
-//         };
-//       //Add snippet
-//       if (nySearch[i].snippet && nySearch[i].snippet) {
-//         $("#newsSpot").append("<h7 class='mediaContent'>" + nySearch[i].snippet + "</h7>");
-//       };
-
-//     };
-//   });
-// };
+    };
+  });
+});
